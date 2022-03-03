@@ -6,11 +6,12 @@ services:
     restart: always
 
   app:
-    image: nextcloud:fpm-alpine
+    image: nextcloud:23.0.2-fpm-alpine
     restart: always
     volumes:
       - nextcloud:/var/www/html
       - ./redis-session.ini:/usr/local/etc/php/conf.d/redis-session.ini
+      - ./www.overloaded.conf:/usr/local/etc/php-fpm.d/www.overloaded.conf
     env_file:
       - nc.env
     depends_on:
