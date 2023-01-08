@@ -1,0 +1,17 @@
+[Unit]
+Description=Nextcloud Rootless Docker Compose Application Service
+Requires=common-compose.service
+After=common-compose.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/ubuntu/rootless-nextcloud-compose
+Environment="DOCKER_HOST=unix:///run/user/1001/docker.sock"
+ExecStartPre=/home/ubuntu/.local/bin/docker-compose down
+ExecStart=/home/ubuntu/.local/bin/docker-compose up -d
+ExecStop=/home/ubuntu/.local/bin/docker-compose down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
